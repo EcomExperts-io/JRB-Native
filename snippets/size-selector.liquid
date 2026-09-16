@@ -1,0 +1,52 @@
+{% comment %}
+  /snippets/size-selector.liquid
+  Accepts: product, section_id
+{% endcomment %}
+
+{%- liquid
+  assign size_option = null
+  for option in product.options_with_values
+    assign downcased = option.name | downcase
+    if downcased == 'size'
+      assign size_option = option
+    endif
+  endfor
+-%}
+
+{%- if size_option -%}
+  <div class="size-selector" data-section-id="{{ section_id }}">
+    <div class="size-selector__header">
+      <span class="size-selector__title">{{ size_option.name }}</span>
+      <div class="size-selector__guide-trigger" onclick="document.querySelector('.size-guide-modal').classList.add('is-open')">
+        <img src="{{ 'icon-ruler.svg' | asset_url }}" width="16" height="16">
+        <span>Size guide</span>
+      </div>
+    </div>
+
+    <div class="size-selector__options">
+      {%- for value in size_option.values -%}
+        {%- assign is_available = false -%}
+        {%- for variant in product.variants -%}
+          {%- if variant.options contains value and variant.available -%}
+            {%- assign is_available = true -%}
+          {%- endif -%}
+        {%- endfor -%}
+
+        <div
+          class="size-selector__swatch{% unless is_available %} size-selector__swatch--sold-out{% endunless %}{% if size_option.selected_value == value %} is-selected{% endif %}"
+          data-value="{{ value | escape }}"
+          title="{{ value | escape }}"
+          onclick="window.selectVariantOption('{{ size_option.name }}', '{{ value | escape }}')"
+        >
+          {{ value | escape }}
+        </div>
+      {%- endfor -%}
+    </div>
+
+    <div class="size-selector__stock">
+      {%- if product.selected_or_first_available_variant.inventory_quantity < 5 -%}
+        <span style="color: #e3b8b8;">Only a few left</span>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endif -%}
