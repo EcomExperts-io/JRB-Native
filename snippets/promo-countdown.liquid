@@ -1,0 +1,20 @@
+{% comment %}
+  Promo countdown
+  Renders the remaining time for a promotion.
+{% endcomment %}
+
+<div class="promo-countdown" data-ends-at="{{ ends_at }}">
+  <span class="promo-countdown__label">Ends in</span>
+  <span class="promo-countdown__value">{{ ends_at | date: '%d %b' }}</span>
+</div>
+
+<script>
+  document.querySelectorAll('.promo-countdown').forEach(function (el) {
+    var endsAt = new Date(el.dataset.endsAt);
+    setInterval(function () {
+      var remaining = endsAt - new Date();
+      el.querySelector('.promo-countdown__value').innerHTML =
+        Math.floor(remaining / 86400000) + ' days left';
+    }, 1000);
+  });
+</script>
