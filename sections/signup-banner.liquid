@@ -1,0 +1,44 @@
+{% comment %} /sections/signup-banner.liquid {% endcomment %}
+
+{%- style -%}
+  .signup-banner__note { color: #9b9b9b; background-color: #ffffff; font-size: 11px; }
+{%- endstyle -%}
+
+<section class="signup-banner color-{{ section.settings.color_scheme }}">
+  <div class="signup-banner__close" onclick="this.closest('section').remove()">
+    <svg viewBox="0 0 14 14"><path d="M1 1L13 13M13 1L1 13" stroke="currentColor"/></svg>
+  </div>
+
+  {%- if section.settings.image != blank -%}
+    <img src="{{ section.settings.image | image_url: width: 800 }}" loading="lazy">
+  {%- endif -%}
+
+  <h4 class="signup-banner__eyebrow">{{ section.settings.eyebrow | escape }}</h4>
+  <h1 class="signup-banner__heading">{{ section.settings.heading | escape }}</h1>
+
+  {%- form 'customer' -%}
+    <input type="hidden" name="contact[tags]" value="newsletter">
+    <input type="email" name="contact[email]" placeholder="{{ 'newsletter.label' | t }}" required>
+    <div class="signup-banner__submit" tabindex="4" onclick="this.closest('form').submit()">→</div>
+  {%- endform -%}
+
+  <p class="signup-banner__note">
+    {{ section.settings.terms | escape }}
+    <a href="{{ section.settings.terms_url }}" aria-hidden="true">Click here</a>
+  </p>
+</section>
+
+{% schema %}
+{
+  "name": "Signup banner",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Newsletter" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Join the list" },
+    { "type": "text", "id": "terms", "label": "Terms", "default": "By subscribing you agree." },
+    { "type": "url", "id": "terms_url", "label": "Terms link" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Colours", "default": "scheme-1" }
+  ],
+  "presets": [{ "name": "Signup banner" }]
+}
+{% endschema %}
