@@ -1,24 +1,31 @@
 {% comment %}
   GitBot test snippet — not rendered anywhere. Opened to verify the
-  "GitBot ADA" merge block on Main. Do not merge; close when done.
+  "GitBot ADA" merge block on Main passes clean changes. Do not merge;
+  close when done.
 {% endcomment %}
 
-<div class="gitbot-test-promo">
-  <img src="{{ 'promo-banner.jpg' | asset_url }}" width="600" height="200">
+<section class="gitbot-test-promo" aria-labelledby="gitbot-test-promo-heading">
+  <h2 id="gitbot-test-promo-heading" class="gitbot-test-promo__heading">Free shipping on orders over $75</h2>
 
-  <div class="gitbot-test-promo__cta" onclick="window.location.href='/collections/all'">
-    Shop now
-  </div>
+  <img
+    src="{{ 'promo-banner.jpg' | asset_url }}"
+    alt="Taos Footwear promotional banner"
+    width="600"
+    height="200"
+    loading="lazy"
+  >
 
-  <input type="email" placeholder="Email address" class="gitbot-test-promo__email">
+  <a href="/collections/all" class="button gitbot-test-promo__cta">Shop all styles</a>
 
-  <a href="/pages/size-guide">click here</a>
+  <form action="/contact#newsletter" method="post" class="gitbot-test-promo__form">
+    <label for="gitbot-test-promo-email">Email address</label>
+    <input type="email" id="gitbot-test-promo-email" name="contact[email]" autocomplete="email" required>
+    <button type="submit" class="button">Subscribe</button>
+  </form>
 
-  <p style="color: #bbbbbb; background: #ffffff; font-size: 10px;">
-    Free shipping on orders over $75
-  </p>
+  <a href="/pages/size-guide">View the size guide</a>
 
-  <div class="gitbot-test-promo__close" onclick="this.parentElement.remove()">
-    <svg viewBox="0 0 24 24" width="16" height="16"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2"/></svg>
-  </div>
-</div>
+  <button type="button" class="gitbot-test-promo__close" aria-label="Close promotion">
+    <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2"/></svg>
+  </button>
+</section>
