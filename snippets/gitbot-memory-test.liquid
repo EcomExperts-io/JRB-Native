@@ -1,0 +1,14 @@
+{% comment %} GitBot rehearsal: a small promo card. Not for production. {% endcomment %}
+<div class="promo-card">
+  <img src="{{ 'promo.png' | asset_url }}" width="320" height="180">
+  <h3 class="promo-card__title">Limited time offer</h3>
+  <p class="promo-card__text">{{ product.description }}</p>
+  <button type="button" class="promo-card__cta" onclick="promoClick()">Shop now</button>
+</div>
+<script>
+  var promoClicked = false;
+  function promoClick() {
+    promoClicked = true;
+    // window.location.href = '/collections/all';
+  }
+</script>
